@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { IProduct } from "./products";
 
 @Component({
@@ -7,12 +7,15 @@ import { IProduct } from "./products";
     styleUrls:['./product-list.component.css']
 })
 
-export class ProductListComponent  {
+export class ProductListComponent implements OnInit  {
     pageTitle:string='Product List!';
     imageWidth:number=50;
     imageMargin:number=2;
     showStatus:boolean=false;
-    listFilter:string='cart'
+    listFilter:string='cart';
+    ngOnInit(): void {
+      console.log('onInit')
+    }
     products:IProduct[]= [
         {
             "productId": 1,
