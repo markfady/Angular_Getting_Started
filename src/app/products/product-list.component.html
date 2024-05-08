@@ -6,7 +6,7 @@
       <div class='row'>
         <div class='col-md-2'>Filter by:</div>
         <div class='col-md-4'>
-          <input type='text'/>
+          <input type='text' [(ngModel)]='listFilter'/> <!-- ngModel to use default data-->
         </div>
       </div>
       <div class='row'>
@@ -19,9 +19,9 @@
           <thead>
             <tr>
               <th>
-               <button class="btn btn-primary" (click)="toggleImage()">  <!--Click event-->
+              <button class="btn btn-primary" (click)="toggleImage()">  <!--Click event-->
                 {{showStatus?'Hide':'Show'}} Image <!--Javascript conditional operator-->
-               </button>
+              </button>
               </th>
               <th>Product</th>
               <th>Code</th>
@@ -36,9 +36,9 @@
                 <img [style.margin.px]='imageMargin' [style.width.px]='imageWidth' [src]='product.imageUrl' [title]='product.productName'> <!-- Property Binding -->
               </td>
               <td>{{product.productName}}</td>
-              <td>{{product.productCode}}</td>
+              <td>{{product.productCode | lowercase}}</td> <!--pipe usage-->
               <td>{{product.releaseDate}}</td>
-              <td>{{product.price}}</td>
+              <td>{{product.price |currency:'USD':'symbol':'1.2-2'}}</td> <!--pipe usage-->
               <td>{{product.starRating}}</td>
             </tr>
           </tbody>
