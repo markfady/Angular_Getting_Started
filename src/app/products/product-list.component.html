@@ -19,8 +19,8 @@
           <thead>
             <tr>
               <th>
-               <button class="btn btn-primary">
-                Show Image
+               <button class="btn btn-primary" (click)="toggleImage()">  <!--Click event-->
+                {{showStatus?'Hide':'Show'}} Image <!--Javascript conditional operator-->
                </button>
               </th>
               <th>Product</th>
@@ -32,7 +32,9 @@
           </thead>
           <tbody>
             <tr *ngFor="let product of products"> <!-- Using Directives for -->
-              <td></td>
+              <td *ngIf="showStatus">  <!--Check the status-->
+                <img [style.margin.px]='imageMargin' [style.width.px]='imageWidth' [src]='product.imageUrl' [title]='product.productName'> <!-- Property Binding -->
+              </td>
               <td>{{product.productName}}</td>
               <td>{{product.productCode}}</td>
               <td>{{product.releaseDate}}</td>
