@@ -1,6 +1,6 @@
 <div class='card'>
     <div class='card-header'>
-        Product List
+        {{pageTitle}}     <!--when Angular renders the ProductListComponent, it replaces {{pageTitle}} with the value of the pageTitle property from the component class -->
     </div>
     <div class='card-body'>
       <div class='row'>
@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class='table-responsive'>
-        <table class='table'>
+        <table class='table' *ngIf="products.length"> <!-- Using Directives If-->
           <thead>
             <tr>
               <th>
@@ -31,6 +31,14 @@
             </tr>
           </thead>
           <tbody>
+            <tr *ngFor="let product of products"> <!-- Using Directives for -->
+              <td></td>
+              <td>{{product.productName}}</td>
+              <td>{{product.productCode}}</td>
+              <td>{{product.releaseDate}}</td>
+              <td>{{product.price}}</td>
+              <td>{{product.starRating}}</td>
+            </tr>
           </tbody>
         </table>
       </div>
