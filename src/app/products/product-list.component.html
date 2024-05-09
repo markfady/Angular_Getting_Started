@@ -36,7 +36,7 @@
                 <img *ngIf="showStatus" [style.margin.px]='imageMargin' [style.width.px]='imageWidth' [src]='product.imageUrl' [title]='product.productName'> <!-- Property Binding -->
               </td>
               <td>{{product.productName}}</td>
-              <td>{{product.productCode | lowercase}}</td> <!--pipe usage-->
+              <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td> <!--built in pipe usage & custom pipe usage must be called inside module-->
               <td>{{product.releaseDate}}</td>
               <td>{{product.price |currency:'USD':'symbol':'1.2-2'}}</td> <!--pipe usage-->
               <td>{{product.starRating}}</td>
