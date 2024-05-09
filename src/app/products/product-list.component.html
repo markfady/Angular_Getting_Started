@@ -31,7 +31,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let product of products"> <!-- Using Directives for -->
+            <tr *ngFor="let product of filteredProduct"> <!-- Using Directives for to loop on our filteredProducts array-->
               <td >  <!--Check the status-->
                 <img *ngIf="showStatus" [style.margin.px]='imageMargin' [style.width.px]='imageWidth' [src]='product.imageUrl' [title]='product.productName'> <!-- Property Binding -->
               </td>

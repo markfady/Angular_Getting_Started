@@ -12,9 +12,29 @@ export class ProductListComponent implements OnInit  {
     imageWidth:number=50;
     imageMargin:number=2;
     showStatus:boolean=false;
-    listFilter:string='cart';
+ 
+    private _listFilter:string=''
+   
+
+    get listFilter():string{
+      return this._listFilter
+    }
+
+    set listFilter(value:string){
+      this._listFilter=value;
+      console.log('In setter:', value)
+      this.filteredProduct=this.performFilter(value) //first we pass the value from text box 
+    }
+    filteredProduct:IProduct[]=[]
+   
+    performFilter(filterBy:string):IProduct[]{ 
+      filterBy=filterBy.toLocaleLowerCase() //second we set data came from text box to lowerCase
+      return this.products.filter((product:IProduct)=>{ //third we select our products array to start comparison between it and our text box
+        return product.productName.toLocaleLowerCase().includes(filterBy) //fourth we first lowerCase our product names to be matching comparison , then we check if text box value in our product list so we filter it
+      })
+    }
     ngOnInit(): void {
-      console.log('onInit')
+      this.listFilter='cart';
     }
     products:IProduct[]= [
         {
