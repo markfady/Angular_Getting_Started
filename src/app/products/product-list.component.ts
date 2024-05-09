@@ -36,6 +36,12 @@ export class ProductListComponent implements OnInit  {
     ngOnInit(): void {
       this.listFilter='cart';
     }
+
+      //send data from star children to parent product-list using emet , and when you use emet you must define it's function here
+      onRatingClicked(message:string):void{
+        this.pageTitle='Product List:'+message;
+      }
+
     products:IProduct[]= [
         {
             "productId": 1,

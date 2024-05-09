@@ -39,7 +39,10 @@
               <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td> <!--built in pipe usage & custom pipe usage must be called inside module-->
               <td>{{product.releaseDate}}</td>
               <td>{{product.price |currency:'USD':'symbol':'1.2-2'}}</td> <!--pipe usage-->
-              <td>{{product.starRating}}</td>
+              <td>
+                <pm-star [rating]='product.starRating' (ratingClicked)='onRatingClicked($event)'>
+ 
+                </pm-star></td> <!--Nest star component within this component-->
             </tr>
           </tbody>
         </table>
