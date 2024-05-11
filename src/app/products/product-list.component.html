@@ -35,7 +35,10 @@
               <td >  <!--Check the status-->
                 <img *ngIf="showStatus" [style.margin.px]='imageMargin' [style.width.px]='imageWidth' [src]='product.imageUrl' [title]='product.productName'> <!-- Property Binding -->
               </td>
-              <td>{{product.productName}}</td>
+              <td>
+                <a [routerLink]="['/products', product.productId]">{{ product.productName }}</a>
+            </td>
+            
               <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td> <!--built in pipe usage & custom pipe usage must be called inside module-->
               <td>{{product.releaseDate}}</td>
               <td>{{product.price |currency:'USD':'symbol':'1.2-2'}}</td> <!--pipe usage-->
