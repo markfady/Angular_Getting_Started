@@ -9,6 +9,7 @@ import { StarComponent } from './shared/star.component';
 import { ProductDetailComponent } from './products/product-detail.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { RouterModule } from '@angular/router';
+import { ProductDetailGuard } from './products/product-detail.guard';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { RouterModule } from '@angular/router';
     HttpClientModule, //To use Http inside service file , to make get request that returns observable,
     RouterModule.forRoot([
       {path:'products',component:ProductListComponent},
-      {path:'products/:id',component:ProductDetailComponent},
+      {path:'products/:id', canActivate:[ProductDetailGuard],component:ProductDetailComponent},
       {path:'welcome',component:WelcomeComponent},
       {path:'',redirectTo:'welcome',pathMatch:'full'}, //when application loads this will be the default view of our application
       {path:'**',redirectTo:'welcome',pathMatch:'full'}
