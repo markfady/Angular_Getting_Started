@@ -21,6 +21,10 @@ function ratingValidator(min:number,max:number):ValidatorFn{
     }
     return {'match':true} //add this role to form group when both doesn't match 
   }
+  interface ValidationMessages {
+    [key: string]: string;
+  }
+    
 @Component({
   selector: 'pm-customer',
   templateUrl: './customer.component.html',
@@ -29,7 +33,8 @@ function ratingValidator(min:number,max:number):ValidatorFn{
 export class CustomerComponent implements OnInit {
   customerForm: FormGroup //defines our form Model (needs to be initialized 'in decleration or constructor or in ngOnInit')
   customer= new Customer(); //defines data passed to and from back-end server
-
+  emailMessage: string = ''; //This will be shown to user as validation message
+  
   constructor(private formBuilder:FormBuilder) {
     this.customerForm=this.formBuilder.group({
       firstName:['',[Validators.required,Validators.minLength(3)]],
@@ -41,17 +46,27 @@ export class CustomerComponent implements OnInit {
       phone:'',
       notification:'email',
       rating:[null,ratingValidator(1,5)], //Form control name will see (rating)
-      sendCatalog: true
+      sendCatalog: true,
     })
     //watcher to detect the change in the HTML Text or Email value is chosen by user
     this.customerForm.get('notification')?.valueChanges.subscribe(
       value=> this.setNotification(value)
     )
+    //watcher to detect email , re type email 
+      const emailControl=this.customerForm.get('emailGroup.email');
+      emailControl?.valueChanges.subscribe(
+        value=>this.setMessage(emailControl)
+      )
   }
  
-  ngOnInit(){
-  
-  }
+ //Move validation messages from html to class
+ private validationMessages: ValidationMessages={
+  required:'Please enter valid email',
+  email: 'Please enter valid email'
+}
+  ngOnInit(){}
+
+
   populateTestData():void{
     this.customerForm.setValue({
       firstName:'Mark',
@@ -60,7 +75,7 @@ export class CustomerComponent implements OnInit {
       sendCatalog:false
     })
   }
-  //use this method to check if text or email is clicked then pass the clicked value inside notifyVia
+  //Method to check if text or email is clicked then pass the clicked value inside notifyVia
   setNotification(notifyVia:string):void{
     const phoneControl=this.customerForm.get('phone')
     if(notifyVia==='text'){ //If user selected text , so phone input will be required
@@ -70,6 +85,16 @@ export class CustomerComponent implements OnInit {
       phoneControl?.clearValidators();
     }
     phoneControl?.updateValueAndValidity();
+  }
+
+//Method to set the emailMessage with different stats(dirty,touched,error)
+  setMessage(c: AbstractControl): void {
+    this.emailMessage = ''; 
+  
+    if ((c.touched || c.dirty) && c.errors) {
+      this.emailMessage = Object.keys(c.errors).map(
+        key => this.validationMessages[key]).join(' ');
+    }
   }
   save(){
     console.log(this.customerForm)
