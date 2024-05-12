@@ -43,9 +43,14 @@ export class CustomerComponent implements OnInit {
       rating:[null,ratingValidator(1,5)], //Form control name will see (rating)
       sendCatalog: true
     })
+    //watcher to detect the change in the HTML Text or Email value is chosen by user
+    this.customerForm.get('notification')?.valueChanges.subscribe(
+      value=> this.setNotification(value)
+    )
   }
-  
+ 
   ngOnInit(){
+  
   }
   populateTestData():void{
     this.customerForm.setValue({
