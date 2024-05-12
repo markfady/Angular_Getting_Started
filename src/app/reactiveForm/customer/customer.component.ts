@@ -16,6 +16,8 @@ export class CustomerComponent implements OnInit {
       firstName:['',[Validators.required,Validators.minLength(3)]],
       lastName: ['',[Validators.required,Validators.maxLength(50)]],
       email: ['',[Validators.required,Validators.email]],
+      phone:'',
+      notification:'email',
       sendCatalog: true
     })
   }
@@ -29,6 +31,17 @@ export class CustomerComponent implements OnInit {
       email:'mark@giza.com',
       sendCatalog:false
     })
+  }
+  //use this method to check if text or email is clicked then pass the clicked value inside notifyVia
+  setNotification(notifyVia:string):void{
+    const phoneControl=this.customerForm.get('phone')
+    if(notifyVia==='text'){ //If user selected text , so phone input will be required
+      phoneControl?.setValidators(Validators.required) 
+    }
+    else{
+      phoneControl?.clearValidators();
+    }
+    phoneControl?.updateValueAndValidity();
   }
   save(){
     console.log(this.customerForm)
