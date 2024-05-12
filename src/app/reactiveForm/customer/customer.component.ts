@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Customer } from './customer';
 
-function ratingValidator(c:AbstractControl):{ [key: string] : boolean } |null { //Custom validator to check value came from (rating) form control.
+function ratingValidator(min:number,max:number):ValidatorFn{
+  return (c:AbstractControl):{ [key: string] : boolean } |null => { //Custom validator to check value came from (rating) form control.
     if(c.value!==null &&(isNaN(c.value) || c.value<1 || c.value>5)){
       return {'range':true} //Validation role name
     }
     return null
 }
+}
+
 
 @Component({
   selector: 'pm-customer',
@@ -25,7 +28,7 @@ export class CustomerComponent implements OnInit {
       email: ['',[Validators.required,Validators.email]],
       phone:'',
       notification:'email',
-      rating:[null,ratingValidator], //Form control name will see (rating)
+      rating:[null,ratingValidator(1,5)], //Form control name will see (rating)
       sendCatalog: true
     })
   }
