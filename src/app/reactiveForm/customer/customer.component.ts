@@ -2,16 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 import { Customer } from './customer';
 import { debounceTime } from 'rxjs';
+import { ratingValidator } from 'src/app/shared/rating-validator';
 
-//Custom validator function for rating input field also takes parameters
-function ratingValidator(min:number,max:number):ValidatorFn{
-  return (c:AbstractControl):{ [key: string] : boolean } |null => { //Custom validator to check value came from (rating) form control.
-    if(c.value!==null &&(isNaN(c.value) || c.value<min || c.value>max)){
-      return {'range':true} //Validation role name
-    }
-    return null
-}
-}
 
 //validator for confirm email , email 
   function emailValidator(c:AbstractControl): {[key:string]:boolean} |null{
@@ -50,7 +42,7 @@ export class CustomerComponent implements OnInit {
       },{validator:emailValidator}),
       phone:'',
       notification:'email',
-      rating:[null,ratingValidator(1,5)], //Form control name will see (rating)
+      rating: ['', [ratingValidator.range(1, 5)]], //Form control name will see (rating)
       sendCatalog: true,
       addresses:this.formBuilder.array([this.buildAddresses()]) //FormArray index 0 = FormGroup of addresses
     })
