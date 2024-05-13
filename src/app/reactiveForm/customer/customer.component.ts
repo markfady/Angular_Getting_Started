@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 import { Customer } from './customer';
 import { debounceTime } from 'rxjs';
 
@@ -35,7 +35,11 @@ export class CustomerComponent implements OnInit {
   customerForm: FormGroup //defines our form Model (needs to be initialized 'in decleration or constructor or in ngOnInit')
   customer= new Customer(); //defines data passed to and from back-end server
   emailMessage: string = ''; //This will be shown to user as validation message
-  
+
+  get addresses(): FormArray{ //FormArrayName inside HTML 
+    return <FormArray> this.customerForm.get('addresses')
+  }
+
   constructor(private formBuilder:FormBuilder) {
     this.customerForm=this.formBuilder.group({
       firstName:['',[Validators.required,Validators.minLength(3)]],
@@ -48,7 +52,7 @@ export class CustomerComponent implements OnInit {
       notification:'email',
       rating:[null,ratingValidator(1,5)], //Form control name will see (rating)
       sendCatalog: true,
-      addresses:this.buildAddresses()
+      addresses:this.formBuilder.array([this.buildAddresses()]) //FormArray index 0 = FormGroup of addresses
     })
     //watcher to detect the change in the HTML Text or Email value is chosen by user
     this.customerForm.get('notification')?.valueChanges.subscribe(
@@ -69,6 +73,16 @@ export class CustomerComponent implements OnInit {
 }
   ngOnInit(){}
 
+  buildAddresses():FormGroup{
+    return this.formBuilder.group({
+      addressType:'home',
+      street1:'',
+      street2:'',
+      city:'',
+      state:'',
+      zip:'',
+    })
+  }
 
   populateTestData():void{
     this.customerForm.setValue({
@@ -105,16 +119,7 @@ export class CustomerComponent implements OnInit {
     }
   }
   //Method to duplicate the addresses FormGroup when calling it
-  buildAddresses():FormGroup{
-    return this.formBuilder.group({
-      addressType:'home',
-      street1:'',
-      street2:'',
-      city:'',
-      state:'',
-      zip:'',
-    })
-  }
+
   save(){
     console.log(this.customerForm)
     console.log('Saved:' + JSON.stringify(this.customerForm.value))
