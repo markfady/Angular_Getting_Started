@@ -7,7 +7,8 @@ import { RouterModule } from '@angular/router';
 import { ProductModule } from './products/product.module';
 import { CustomerComponent } from './reactiveForm/customer/customer.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import{InMemoryWebApiModule} from 'angular-in-memory-web-api'
+import { ProductData } from './products/productData';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,6 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    InMemoryWebApiModule.forRoot(ProductData),
     HttpClientModule, //To use Http inside service file , to make get request that returns observable,
     RouterModule.forRoot([
       {path:'welcome',component:WelcomeComponent},
