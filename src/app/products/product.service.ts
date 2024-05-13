@@ -8,7 +8,8 @@ import { Observable,catchError,of,tap, throwError } from "rxjs";
 })
  //a service to only get the products data so we can call it when we want , better than putting the hardcoded data in each component
 export class ProductService{
-    private productUrl= 'api/products/products.json'
+  // private productUrl= 'api/products/products.json'
+    private productUrl= 'api/products'
     constructor(private http:HttpClient){}
 
     getProducts():Observable<IProduct[]>{
@@ -47,7 +48,7 @@ export class ProductService{
       private initializeProduct(): IProduct {
         // Return an initialized object
         return {
-          productId:0,
+          id:0,
           productName: '',
           productCode: '',
           releaseDate: '',
