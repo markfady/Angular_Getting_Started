@@ -45,18 +45,20 @@
           <label class="col-md-2 col-form-label"
                  for="starRatingId">Star Rating (1-5)</label>
   
-          <div class="col-md-8">
-            <input class="form-control"
-                   id="starRatingId"
-                   type="text"
-                   placeholder="Rating (1-5)"
-                   formControlName="starRating"
-                   value={{product?.starRating}}
-                   />
-            <span class="invalid-feedback">
-             
-            </span>
-          </div>
+                 <div class="col-md-8">
+                  <input class="form-control"
+                         id="ratingId"
+                         type="number"
+                         formControlName="rating"
+                         [ngClass]="{'is-invalid': (productForm.get('rating')?.touched || 
+                                                    productForm.get('rating')?.dirty) && 
+                                                    !productForm.get('rating')?.valid }" />
+                  <span class="invalid-feedback">
+                    <span *ngIf="productForm.get('rating')?.errors?.['range']">
+                      Please rate your experience from 1 to 5.
+                    </span>
+                  </span>
+                </div>
         </div>
   
        

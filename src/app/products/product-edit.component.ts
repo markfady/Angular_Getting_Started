@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from './product.service';
 import { IProduct } from './products';
 import { Subscription } from 'rxjs';
+import { ratingValidator } from '../shared/rating-validator';
 
 @Component({
   templateUrl: './product-edit.component.html'
@@ -27,7 +28,7 @@ constructor(private formBuilder: FormBuilder,
     this.productForm = this.formBuilder.group({
       productName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       productCode: ['', Validators.required],
-      tags: this.formBuilder.array([]),
+      rating: ['', [ratingValidator.range(1, 5)]],
       description: ''
     });
 
