@@ -48,6 +48,14 @@ export class CustomerComponent implements OnInit {
       notification:'email',
       rating:[null,ratingValidator(1,5)], //Form control name will see (rating)
       sendCatalog: true,
+      addresses:this.formBuilder.group({
+        addressType:'home',
+        street1:'',
+        street2:'',
+        city:'',
+        state:'',
+        zip:'',
+      })
     })
     //watcher to detect the change in the HTML Text or Email value is chosen by user
     this.customerForm.get('notification')?.valueChanges.subscribe(
@@ -73,8 +81,13 @@ export class CustomerComponent implements OnInit {
     this.customerForm.setValue({
       firstName:'Mark',
       lastName:'Fady',
-      email:'mark@giza.com',
-      sendCatalog:false
+      emailGroup:'',
+      phone:'01282239598',
+      notification:'email',
+      rating:5,
+      addresses:'cairo',
+      sendCatalog:false,
+
     })
   }
   //Method to check if text or email is clicked then pass the clicked value inside notifyVia
