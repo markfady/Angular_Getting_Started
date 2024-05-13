@@ -44,8 +44,13 @@
               <td>{{product.price |currency:'USD':'symbol':'1.2-2'}}</td> <!--pipe usage-->
               <td>
                 <pm-star [rating]='product.starRating' (ratingClicked)='onRatingClicked($event)'>
- 
                 </pm-star></td> <!--Nest star component within this component-->
+                <td>
+                  <button class="btn btn-outline-primary btn-sm"
+                          [routerLink]="['/products', product.productId, 'edit']">
+                    Edit
+                  </button>
+                </td>
             </tr>
           </tbody>
         </table>
