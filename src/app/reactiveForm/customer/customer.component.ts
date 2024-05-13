@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Customer } from './customer';
+import { debounceTime } from 'rxjs';
 
 //Custom validator function for rating input field also takes parameters
 function ratingValidator(min:number,max:number):ValidatorFn{
@@ -52,11 +53,12 @@ export class CustomerComponent implements OnInit {
     this.customerForm.get('notification')?.valueChanges.subscribe(
       value=> this.setNotification(value)
     )
-    //watcher to detect email , re type email 
+    //watcher to detect email , re type email  , reactive transformation
       const emailControl=this.customerForm.get('emailGroup.email');
-      emailControl?.valueChanges.subscribe(
-        value=>this.setMessage(emailControl)
-      )
+      emailControl?.valueChanges.pipe(
+        debounceTime(1000)).subscribe(
+          value=>this.setMessage(emailControl)
+        )
   }
  
  //Move validation messages from html to class
