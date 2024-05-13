@@ -1,10 +1,66 @@
 <div class="card">
-    <div class="card-header">
-        {{pageTitle}}
+    <div class="card-header"
+         *ngIf="product">
+      {{product.productName + " "+ product.productId}}
     </div>
-    <div class="card-footer" (click)="onBack()">
-        <button class="btn btn-outline-secondary" style='width: 80px;'>
-            <li class="fa fa-chevron-left" ></li>Back
-        </button>
+  
+    <div class="card-body"
+         *ngIf="product">
+  
+      <div class="row">
+  
+        <div class="card" style="width: 37rem; border: none; margin:0px auto;">
+            <img 
+            style="max-width: 50%; margin: 0px auto;"
+            class="card-img-top" src={{product.imageUrl}} alt={{product.productName}}>
+
+            <div class="card-body">
+              <h5 class="card-title">{{ product.productName }}</h5>
+              <div class="card-text">
+                <div class="row">
+                  <div class="col-md-5">Code:</div>
+                  <div class="col-md-5">{{ product.productCode }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">Description:</div>
+                  <div class="col-md-7">{{ product.description }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">Availability:</div>
+                  <div class="col-md-5">{{ product.releaseDate }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">Price:</div>
+                  <div class="col-md-5">{{ product.price | currency: 'USD': 'symbol' }}</div>
+                </div>
+                <div class="row">
+                  <div class="col-md-5">5 Star Rating:</div>
+                  <div class="col-md-5">
+                    <pm-star [rating]="product.starRating"></pm-star>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+  
+        <div class="col-md-4"
+             *ngIf="product.imageUrl">
+          <img >
+        </div>
+      </div>
+  
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <button class="btn btn-outline-secondary mr-3"
+                  style="width:80px"
+                  (click)="onBack()">
+            <i class="fa fa-chevron-left"></i> Back
+          </button>
+        </div>
+      </div>
+  
     </div>
-</div>
+  
+  
+  </div>
