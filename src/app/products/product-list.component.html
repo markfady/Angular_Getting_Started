@@ -36,7 +36,7 @@
                 <img *ngIf="showStatus" [style.margin.px]='imageMargin' [style.width.px]='imageWidth' [src]='product.imageUrl' [title]='product.productName'> <!-- Property Binding -->
               </td>
               <td>
-                <a [routerLink]="['/products', product.productId]">{{ product.productName }}</a>
+                <a [routerLink]="['/products', product.id]">{{ product.productName }}</a>
             </td>
             
               <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td> <!--built in pipe usage & custom pipe usage must be called inside module-->
@@ -47,7 +47,7 @@
                 </pm-star></td> <!--Nest star component within this component-->
                 <td>
                   <button class="btn btn-outline-primary btn-sm"
-                          [routerLink]="['/products', product.productId, 'edit']">
+                          [routerLink]="['/products', product.id, 'edit']">
                     Edit
                   </button>
                 </td>

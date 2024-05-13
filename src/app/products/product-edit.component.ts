@@ -62,7 +62,7 @@ constructor(private formBuilder: FormBuilder,
   getProduct(id: number): void {
     this.productService.getProducts().subscribe(
       (products) => {
-        const product = products.find(p => p.productId === id);
+        const product = products.find(p => p.id === id);
         if (product) {
           this.product = product;
         }

@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header"
          *ngIf="product">
-      {{product.productName + " "+product.productId}}
+      {{product.productName + " "+product.id}}
     </div>
   
     <div class="card-body"
@@ -61,7 +61,7 @@
         <div class="col-md-4">
           <button class="btn btn-outline-secondary mr-3"
                   style="width:80px"
-                  [routerLink]="['/products',product.productId,'edit']">
+                  [routerLink]="['/products',product.id,'edit']">
                Edit
           </button>
         </div>
