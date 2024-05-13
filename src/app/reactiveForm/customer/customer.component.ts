@@ -72,7 +72,10 @@ export class CustomerComponent implements OnInit {
   email: 'Please enter valid email'
 }
   ngOnInit(){}
-
+  //Method to push our formGroup onto the addresses FormArray , called when user want to make any other instances of formGroup
+  addAddress():void{
+    this.addresses.push(this.buildAddresses())
+  }
   buildAddresses():FormGroup{
     return this.formBuilder.group({
       addressType:'home',
