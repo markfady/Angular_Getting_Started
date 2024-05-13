@@ -48,14 +48,7 @@ export class CustomerComponent implements OnInit {
       notification:'email',
       rating:[null,ratingValidator(1,5)], //Form control name will see (rating)
       sendCatalog: true,
-      addresses:this.formBuilder.group({
-        addressType:'home',
-        street1:'',
-        street2:'',
-        city:'',
-        state:'',
-        zip:'',
-      })
+      addresses:this.buildAddresses()
     })
     //watcher to detect the change in the HTML Text or Email value is chosen by user
     this.customerForm.get('notification')?.valueChanges.subscribe(
@@ -110,6 +103,17 @@ export class CustomerComponent implements OnInit {
       this.emailMessage = Object.keys(c.errors).map(
         key => this.validationMessages[key]).join(' ');
     }
+  }
+  //Method to duplicate the addresses FormGroup when calling it
+  buildAddresses():FormGroup{
+    return this.formBuilder.group({
+      addressType:'home',
+      street1:'',
+      street2:'',
+      city:'',
+      state:'',
+      zip:'',
+    })
   }
   save(){
     console.log(this.customerForm)
