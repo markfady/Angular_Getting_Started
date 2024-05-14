@@ -51,6 +51,16 @@ export class ProductService{
       };  
       return this.http.post<IProduct>(this.productUrl, product, options)
     } 
+    
+  deleteProduct(id: number): Observable<{}> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const url = `${this.productUrl}/${id}`;
+    return this.http.delete<IProduct>(url, { headers })
+      .pipe(
+        tap(data => console.log('deleteProduct: ' + id)),
+        catchError(this.handleError)
+      );
+  }
     private handleError(err: HttpErrorResponse): Observable<never> {
         // in a real world app, we may send the server to some remote logging infrastructure
         // instead of just logging it to the console
