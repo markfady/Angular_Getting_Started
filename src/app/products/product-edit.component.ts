@@ -58,7 +58,19 @@ constructor(private formBuilder: FormBuilder,
   ngOnDestroy(): void {
     this.sub.unsubscribe(); // Unsubscribe to avoid memory leaks
   }
-
+  deleteProduct(): void {
+    if (confirm(`Really delete the product: ${this.product?.productName}?`)) {
+      const productId = this.product?.id; // Extract the product ID
+      if (productId !== undefined) { // Check if productId is defined
+        this.productService.deleteProduct(productId)
+          .subscribe({
+            next: () => this.onSaveComplete(),
+            error: err => this.errorMessage = err
+          });
+      }
+    }
+  }
+  
   getProduct(id: number): void {
     this.productService.getProducts().subscribe(
       (products) => {
@@ -104,4 +116,6 @@ constructor(private formBuilder: FormBuilder,
     this.productForm.reset();
     this.router.navigate(['/products']);
   }
+ 
+  
 }
