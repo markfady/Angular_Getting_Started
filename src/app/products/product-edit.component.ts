@@ -73,4 +73,37 @@ constructor(private formBuilder: FormBuilder,
       }
     );
   }
+
+  saveProduct(): void {
+    if (this.productForm.valid) {
+      if (this.productForm.dirty) {
+        const p = { ...this.product, ...this.productForm.value };
+
+        // if (p.id === 0) {
+        //   this.productService.createProduct(p)
+        //     .subscribe({
+        //       next: () => this.onSaveComplete(),
+        //       error: err => this.errorMessage = err
+        //     });
+        // }
+       
+          this.productService.updateProduct(p) //updateProduct is http put that returns observable so we need to subscribe
+            .subscribe({
+              next: () => this.onSaveComplete(),
+              error: err => this.errorMessage = err
+            });
+        
+      } else {
+        this.onSaveComplete();
+      }
+    } else {
+      this.errorMessage = 'Please correct the validation errors.';
+    }
+    
+  }
+  onSaveComplete(): void {
+    // Reset the form to clear the flags
+    this.productForm.reset();
+    this.router.navigate(['/products']);
+  }
 }
