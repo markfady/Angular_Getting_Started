@@ -5,6 +5,7 @@
   
     <div class="card-body">
       <form novalidate
+      (ngSubmit)="saveProduct()"
         [formGroup]="productForm">
   
         <div class="form-group row mb-2">
@@ -50,6 +51,7 @@
                          id="ratingId"
                          type="number"
                          formControlName="rating"
+                         value={{product?.starRating}}
                          [ngClass]="{'is-invalid': (productForm.get('rating')?.touched || 
                                                     productForm.get('rating')?.dirty) && 
                                                     !productForm.get('rating')?.valid }" />
@@ -63,7 +65,7 @@
   
        
   
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md-2 mb-2">
             <button class="btn btn-outline-secondary btn-sm"
                     type="button"
@@ -71,7 +73,7 @@
                  ></button>
      
           </div>
-        </div>
+        </div> -->
         
         <div class="form-group row mb-2">
           <label class="col-md-2 col-form-label"
@@ -83,6 +85,7 @@
                       placeholder="Description"
                       rows=3
                       formControlName="description"
+                      value={{product?.description}}
                     ></textarea>
             <span class="invalid-feedback">
             
