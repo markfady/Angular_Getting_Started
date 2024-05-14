@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { IProduct } from "./products";
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
-import { Observable,catchError,of,tap, throwError } from "rxjs";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { Observable,catchError,map,of,tap, throwError } from "rxjs";
 
 @Injectable({
     providedIn:'root'
@@ -27,6 +27,17 @@ export class ProductService{
       return this.http.get<IProduct>(url)
         .pipe(
           tap(data => console.log('getProduct: ' + JSON.stringify(data))),
+          catchError(this.handleError)
+        );
+    }
+    updateProduct(product: IProduct): Observable<IProduct> {
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      const url = `${this.productUrl}/${product.id}`;
+      return this.http.put<IProduct>(url, product, { headers })
+        .pipe(
+          tap(() => console.log('updateProduct: ' + product.id)),
+          // Return the product on an update
+          map(() => product),
           catchError(this.handleError)
         );
     }
