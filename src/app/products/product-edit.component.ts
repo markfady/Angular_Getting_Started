@@ -78,29 +78,27 @@ constructor(private formBuilder: FormBuilder,
     if (this.productForm.valid) {
       if (this.productForm.dirty) {
         const p = { ...this.product, ...this.productForm.value };
-
-        // if (p.id === 0) {
-        //   this.productService.createProduct(p)
-        //     .subscribe({
-        //       next: () => this.onSaveComplete(),
-        //       error: err => this.errorMessage = err
-        //     });
-        // }
-       
+        if (p.id >= 1) { //if the product id bigger than 1 or equal will update , if the id = 0 (in our case and memoryAPi zero means not found product so we create it)
           this.productService.updateProduct(p) //updateProduct is http put that returns observable so we need to subscribe
             .subscribe({
               next: () => this.onSaveComplete(),
               error: err => this.errorMessage = err
             });
-        
+        } else {
+          this.productService.createProduct(p)
+            .subscribe({
+              next: () => this.onSaveComplete(),
+              error: err => this.errorMessage = err
+            });
+        }
       } else {
         this.onSaveComplete();
       }
     } else {
       this.errorMessage = 'Please correct the validation errors.';
     }
-    
   }
+  
   onSaveComplete(): void {
     // Reset the form to clear the flags
     this.productForm.reset();
