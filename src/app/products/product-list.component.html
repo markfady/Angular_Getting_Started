@@ -6,7 +6,7 @@
       <div class='row'>
         <div class='col-md-2'>Filter by:</div>
         <div class='col-md-4'>
-          <input type='text' [(ngModel)]='listFilter'/> <!-- ngModel to use default data-->
+          <input type='text' [(ngModel)]="listFilter"/> <!-- ngModel to use default data-->
         </div>
       </div>
       <div class='row'>
@@ -35,8 +35,12 @@
               <td >  <!--Check the status-->
                 <img *ngIf="showStatus" [style.margin.px]='imageMargin' [style.width.px]='imageWidth' [src]='product.imageUrl' [title]='product.productName'> <!-- Property Binding -->
               </td>
-              <td>
-                <a [routerLink]="['/products', product.id]">{{ product.productName }}</a>
+              <td> <!--sending the query parameter , and retain it inside product-detail-->
+                <a
+                 [routerLink]="['/products', product.id]"
+                 [queryParams]="{filterBy:listFilter,showStatus:showStatus}" 
+                 >{{ product.productName }}
+                </a>
             </td>
             
               <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td> <!--built in pipe usage & custom pipe usage must be called inside module-->
