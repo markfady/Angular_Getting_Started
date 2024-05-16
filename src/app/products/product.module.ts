@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProductEditComponent } from './product-edit.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProductEditGuard } from './product-edit.guard';
+import { ProductResolver } from './product.resolver.service';
 
 
 
@@ -23,8 +24,12 @@ import { ProductEditGuard } from './product-edit.guard';
     ReactiveFormsModule,
     RouterModule.forChild([
       {path:'products',component:ProductListComponent},
-      {path:'products/:id', canActivate:[ProductDetailGuard],component:ProductDetailComponent},
-      { path: 'products/:id/edit',canDeactivate:[ProductEditGuard],component: ProductEditComponent}
+      {path:'products/:id', canActivate:[ProductDetailGuard],component:ProductDetailComponent,resolve:{
+        resolvedData:ProductResolver
+      }},
+      { path: 'products/:id/edit',canDeactivate:[ProductEditGuard],component: ProductEditComponent,resolve:{
+        resolvedData:ProductResolver
+      }},
     ]), SharedModule
   ]
 })
