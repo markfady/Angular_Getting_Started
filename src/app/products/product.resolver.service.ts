@@ -10,9 +10,9 @@ import { Observable } from "rxjs";
 
 export class ProductResolver implements Resolve<IProduct>{
     constructor(private productService: ProductService) { }
-//comment
+
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IProduct> {
-       //test
+       
             const id = Number(route.paramMap.get('id')) ;
             return this.productService.getProduct(id);
         }
