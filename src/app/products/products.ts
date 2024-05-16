@@ -10,3 +10,7 @@ export interface IProduct{
         imageUrl: string;
         tags?: string[];
 }
+export interface ProductResolved {
+        product: IProduct;
+        error?: any;
+      }
