@@ -12,12 +12,13 @@ export class ProductService{
     private productUrl= 'api/products'
     constructor(private http:HttpClient){}
 
-    getProducts():Observable<IProduct[]>{
-        return this.http.get<IProduct[]>(this.productUrl).pipe(
-            tap(data=>console.log('all',JSON.stringify(data))), //convert array of object to JSON string
-            catchError(this.handleError)
+    getProducts(): Observable<IProduct[]> {
+      return this.http.get<IProduct[]>(this.productUrl)
+        .pipe(
+          tap(data => console.log(JSON.stringify(data))),
+          catchError(this.handleError)
         );
-    }   
+    }
     
     getProduct(id: number): Observable<IProduct> {
       if (id === 0) {
