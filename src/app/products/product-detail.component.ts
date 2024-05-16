@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IProduct } from './products';
+import { IProduct, ProductResolved } from './products';
 import { ProductService } from './product.service';
 
 @Component({
@@ -11,38 +11,29 @@ import { ProductService } from './product.service';
 export class ProductDetailComponent implements OnInit {
   errorMessage=''
   product: IProduct | undefined;
+  pageTitle = 'Product Detail';
   constructor(private route:ActivatedRoute, private router:Router,private productService:ProductService) { 
 
 
   } //ActivatedRoute to read the URL and get the parameter , to display clicked product Info
 
-  ngOnInit(): void { //initiated when component initialized (Like useEffect)
-    const id=Number(this.route.snapshot.paramMap.get('id')); //parameter(will not change so we use snapshot)
+  ngOnInit(): void {
+    const resolvedData: ProductResolved =
+      this.route.snapshot.data['resolvedData'];
+    this.errorMessage = resolvedData.error;
+    this.onProductRetrieved(resolvedData.product);
+  }
 
+  onProductRetrieved(product: IProduct): void {this.product = product;
 
-      if(id){
-        this.getProduct(id);
-        console.log(id)
-      }
-
+    if (this.product) {
+      this.pageTitle = `Product Detail: ${this.product.productName}`;
+    } else {
+      this.pageTitle = 'No product found';
+    }
   }
   
-  getProduct(id: number): void {
-    this.productService.getProducts().subscribe(
-      (products) => {
-        const product = products.find(p => p.id === id);
-        if (product) {
-          this.product = product;
-        } else {
-          this.errorMessage = 'Product not found';
-        }
-      },
-      (error) => {
-        this.errorMessage = 'Error fetching products';
-        console.error(error);
-      }
-    );
-  }
+  
 
   onBack():void{
     this.router.navigate(['/products']);
