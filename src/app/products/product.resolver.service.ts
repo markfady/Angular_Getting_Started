@@ -15,7 +15,6 @@ export class ProductResolver implements Resolve<IProduct>{
             const id = Number(route.paramMap.get('id')) ;
             return this.productService.getProduct(id);
      
-    
         }
     }
 
