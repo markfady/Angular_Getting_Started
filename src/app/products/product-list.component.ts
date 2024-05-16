@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { IProduct } from "./products";
 import { ProductService } from "./product.service";
 import { Subscription } from "rxjs";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
     selector: 'pm-products',
@@ -9,7 +10,7 @@ import { Subscription } from "rxjs";
     styleUrls:['./product-list.component.css']
 })
 
-export class ProductListComponent implements OnInit ,OnDestroy {
+export class ProductListComponent implements OnInit  {
     pageTitle:string='Product List!';
     imageWidth:number=50;
     imageMargin:number=2;
@@ -30,7 +31,7 @@ export class ProductListComponent implements OnInit ,OnDestroy {
     set listFilter(value:string){
       this._listFilter=value;
       console.log('In setter:', value)
-      this.filteredProduct=this.performFilter(value) //first we pass the value from text box 
+      this.filteredProduct = this.listFilter ? this.performFilter(this.listFilter) : this.products; //first we pass the value from text box 
     }
    
     performFilter(filterBy:string):IProduct[]{ 
@@ -43,17 +44,18 @@ export class ProductListComponent implements OnInit ,OnDestroy {
 
   // start get data from the service by subscribe //
     ngOnInit(): void {
-    this.sub=this.productService.getProducts().subscribe({ 
-      next:productsData=>{  //curly braces cause more than one line inside the next notification
-      this.products=productsData;
-      this.filteredProduct=this.products;
-      },
-      error:err=>this.errorMessage=err
-    }); 
+      this.productService.getProducts().subscribe({
+        next: products => {
+          this.products = products;
+          this.filteredProduct = this.performFilter(this.listFilter); //filteredProduct is always set to the filtered result based on listFilter. 
+        },
+        error: err => this.errorMessage = err
+      });
+      // a property of ActivatedRouteSnapshot that returns a map of the query parameters available in the current route.
+    this.listFilter=this.route.snapshot.queryParamMap.get('filterBy') || ''; //
+    this.showStatus=this.route.snapshot.queryParamMap.get('showStatus')==='true';
     }
-    ngOnDestroy(): void {
-      this.sub.unsubscribe()
-    }
+   
     // End  get data from the service by subscribe //
 
       //send data from star children to parent product-list using emit , and when you use emit you must define it's function here
@@ -66,6 +68,6 @@ export class ProductListComponent implements OnInit ,OnDestroy {
     }
       //end show/hide Image status
 
-    constructor(private productService:ProductService){ //Inject get from http through angular
+    constructor(private productService:ProductService,private route:ActivatedRoute){ //Inject get from http through angular
     }
 }
