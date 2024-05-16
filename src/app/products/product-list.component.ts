@@ -42,7 +42,7 @@ export class ProductListComponent implements OnInit  {
     }
     //End set data to filteredProduct
 
-  // start get data from the service by subscribe //
+  // start get data from the service by subscribe /
     ngOnInit(): void {
       this.productService.getProducts().subscribe({
         next: products => {
